@@ -14,7 +14,7 @@ class LeadForm(ModelForm):
     )
     service = forms.MultipleChoiceField(choices=CHOICES, widget=forms.CheckboxSelectMultiple, label='Service(s)')
     message = forms.CharField(widget=forms.Textarea, required=True, label='Tell us more about your project.')
-    # captcha = ReCaptchaField(widget=ReCaptchaV3)
+    captcha = ReCaptchaField(widget=ReCaptchaV3)
 
     class Meta:
         model = Lead
