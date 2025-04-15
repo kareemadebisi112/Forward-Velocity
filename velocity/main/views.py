@@ -21,6 +21,10 @@ load_dotenv(dotenv_path)
 def robots_txt(request):
     return HttpResponse(robots_txt_content, content_type="text/plain", status=200)
 
+@require_GET
+def txt_file(request):
+    content = ""
+    return HttpResponse(content, content_type="text/plain", status=200)
 
 robots_txt_content = """\
 User-Agent: *
