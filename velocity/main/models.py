@@ -122,3 +122,10 @@ class Tag(BaseModel):
     def __str__(self):
         return self.name
     
+
+class Affiliate(BaseModel):
+    code = models.CharField(max_length=50, unique=True)
+    clicks = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"Affilicate Code: {self.code} - Clicks: {self.clicks}"

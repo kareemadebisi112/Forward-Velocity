@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from .forms import LeadForm
 import os
 from dotenv import find_dotenv, load_dotenv
@@ -132,3 +132,13 @@ def blog_detail(request, slug):
         'og_type': 'article'
     }
     return render(request, 'main/blog/blog_detail.html', context)
+
+def affiliate_redirect(request, code):
+    print(code)
+    try:
+        affiliate = Affiliate.objects.get(code=code)
+        affiliate.clicks += 1
+        affiliate.save()
+    except Affiliate.DoesNotExist:
+        return HttpResponse(status=404)
+    return redirect('index')

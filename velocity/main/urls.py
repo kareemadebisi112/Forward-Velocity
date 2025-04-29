@@ -29,4 +29,6 @@ urlpatterns = [
 
     path('robots.txt', views.robots_txt, name='robots_txt'),
     path('7bb8a3b7f66b77a63016e9818c6c22a8.txt', views.txt_file, name='txt_file'),
+
+    path('<code>', views.affiliate_redirect, name='affiliate_redirect'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
