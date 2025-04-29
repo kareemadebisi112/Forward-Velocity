@@ -21,6 +21,10 @@ load_dotenv(dotenv_path)
 def robots_txt(request):
     return HttpResponse(robots_txt_content, content_type="text/plain", status=200)
 
+@require_GET
+def txt_file(request):
+    content = ""
+    return HttpResponse(content, content_type="text/plain", status=200)
 
 robots_txt_content = """\
 User-Agent: *
@@ -104,9 +108,11 @@ def post_lead(request):
 
 def blog_list(request):
     blogs = Blog.objects.all()
+    form = LeadForm()
     context = {
         'blogs': blogs,
-        'year': get_current_year()
+        'year': get_current_year(),
+        'form': form,
     }
     return render(request, 'main/blog/blog_list.html', context)
 
@@ -119,5 +125,10 @@ def blog_detail(request, slug):
         'category': category,
         'form': form,
         'year': get_current_year(),
+        'og_title': blog.title,
+        'og_desc': blog.intro,
+        'og_image': blog.image.url,
+        'og_url': request.build_absolute_uri(),
+        'og_type': 'article'
     }
     return render(request, 'main/blog/blog_detail.html', context)

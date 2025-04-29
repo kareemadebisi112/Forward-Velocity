@@ -18,9 +18,16 @@
 	  <meta name="twitter:site" content="@made_kareem"> 
 	
 	  <!-- Content details -->
-	  <meta name="twitter:title" content="Forward Velocity - Software Development Firm">
-	  <meta name="twitter:description" content="Forward Velocity: Maryland-based firm offering custom web and app development, AI features, and brand identity for small businesses.">
-	  <meta name="twitter:image" content="{% static 'main/assets/fv_logo.png' %}"> <!-- Link to an image that represents your brand -->
+	  <meta name="twitter:title" content="{{ og_title|default:'Forward Velocity - Software Development Firm'}}">
+	  <meta name="twitter:description" content="{{ og_desc|default:'Forward Velocity: Maryland-based firm offering custom web and app development, AI features, and brand identity for small businesses.'}}">
+	  <meta name="twitter:image" content="{{ og_image|default:'static/main/assets/fv_logo.png' }}"> <!-- Link to an image that represents your brand -->
+
+	<!-- Essential Open Graph tags -->
+	<meta property="og:title" content="{{ og_title|default:'Forward Velocity - Software Development Firm' }}">
+	<meta property="og:description" content="{{ og_desc|default:'Forward Velocity: Maryland-based firm offering custom web and app development, AI features, and brand identity for small businesses.' }}">
+	<meta property="og:image" content="{{ og_image|default:'static/main/assets/fv_logo.png' }}">
+	<meta property="og:url" content="{{ request.build_absolute_uri }}">
+	<meta property="og:type" content="{{ og_type|default:'website' }}">
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -28,6 +35,46 @@
 	<!-- Tailwind CSS (Remove before Deploy) -->
 	<!-- <script src="https://cdn.tailwindcss.com"></script>  -->
 	<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-05RMLTQ8MB">
+	</script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'G-05RMLTQ8MB');
+	</script>
+
+	<!-- Google tag (gtag.js) event - delayed navigation helper -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16756458298"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-16756458298');
+</script>  
+
+<!-- Event snippet for Submit Lead conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+<script>
+	function gtag_report_conversion(url) {
+	  var callback = function () {
+		if (typeof(url) != 'undefined') {
+		  window.location = url;
+		}
+	  };
+	  gtag('event', 'conversion', {
+		  'send_to': 'AW-16756458298/6K6CCPSR0OwZELqGjbY-',
+		  'event_callback': callback
+	  });
+	  return false;
+	}
+	</script>
+	
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -104,7 +151,8 @@
 							class="info-form"
 							hx-post="{% url 'post-lead' %}"
 							hx-swap="innerHTML"
-							hx-target="#modal-body">
+							hx-target="#modal-body"
+							hx-on:click="return gtagSendEvent('https://forward-velocity.com/contact')">
 								
 									{% csrf_token %}
 		

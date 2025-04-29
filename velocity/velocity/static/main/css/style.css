@@ -103,3 +103,6 @@ span {
 .cards{
     min-height: 145px;
 }
+.author{
+    text-transform: capitalize;
+}

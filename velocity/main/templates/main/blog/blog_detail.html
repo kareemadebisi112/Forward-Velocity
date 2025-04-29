@@ -13,12 +13,13 @@
             }
             h2{
                 font-weight: 700 !important;
-                font-size: 32px;
+                font-size: 36px;
                 margin-top: 3rem;
                 margin-bottom: 1rem;
             }
             p{
-                line-height: 1.75rem;
+                line-height: 2rem;
+                font-size: 1.125rem;
             }
             a{
                 color: #dee2e6;
@@ -32,7 +33,50 @@
                     filter: brightness(0) saturate(100%) invert(66%) sepia(72%) saturate(3742%) hue-rotate(76deg) brightness(118%) contrast(130%);
                 }
             }
+            ol {
+                counter-reset: list-counter;
+            }
 
+            ol > li {
+                counter-increment: list-counter;
+            }
+            ol > li::marker {
+                font: 600 1rem/1.5rem 'Poppins', sans-serif;
+                color: #09ff00;
+                content: "0" counter(list-counter) ". ";
+            }
+            ol > li:nth-child(n+10)::marker {
+                    content: counter(list-counter) ". ";
+            }
+            ul li::marker{
+                color: #09ff00;
+            }
+            strong{
+                color: #09ff00;
+            }
+            .pro-tip, .example, .imagine, .idea{
+                outline: 2px solid #09ff00;
+                padding: 1rem;
+                border-radius: 0.75rem;
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                transition: all 0.3s;
+                &:hover{
+                    transform: translateY(-0.7px);
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+                }
+            }
+            .imagine{
+                outline: 2px solid #CA8DD6;
+                strong{
+                    color: #CA8DD6;
+                }
+            }
+            .socials{
+                a{
+                    font-size: 1.25rem;
+                }
+            }
         </style>
         
         <div class="container px-5">
@@ -40,30 +84,27 @@
                 <div class="col-lg-10 col-xl-8">
                     <div class="single-post">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                            <ol class="breadcrumb">
+                            <ul class="breadcrumb">
                               <li class="breadcrumb-item"><a href="{% url 'blog_list' %}" class="breadcrumb-link">Blog</a></li>
                               <li class="breadcrumb-item active" aria-current="page">{{blog.title}}</li>
-                            </ol>
+                            </ul>
                           </nav>
             
                         <h1 class="mb-4">{{blog.title}}</h1>
                         <p class="lead mb-4">{{blog.intro}}</p>
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <div class="single-post-meta me-4">
-                                
                                 <div class="single-post-meta-details">
-                                    <div class="single-post-meta-details-name">Written By: {{blog.author}}</div>
-                                    <div class="single-post-meta-details-date">{{blog.created_at|date:"M d, Y"}} · 6 min read</div>
-                                    {% if blog.updated_at != blog.created_at %}
-                                    <div class="single-post-meta-details-date text-muted">Updated on: {{blog.updated_at|date:"M d, Y"}}</div>
-                                    {% endif %}
+                                    <div class="single-post-meta-details-name author">Written By: {{blog.author}}</div>
+                                    <div class="single-post-meta-details-date">{{blog.created_at|date:"M d, Y"}} · 4 min read</div>
+                                    <!-- <div class="single-post-meta-details-date text-muted">Updated on: {{blog.updated_at|date:"M d, Y"}}</div> -->
                                 </div>
                             </div>
                             <div class="single-post-meta-links d-flex gap-3 socials">
                                 <a href="https://twitter.com/share?url=forward-velocity.com{% url 'blog_detail' blog.slug %}" onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" title="Share on Twitter" rel="noopener"><i class="bi bi-twitter-x"></i></a>
                                 <a href="https://www.facebook.com/sharer/sharer.php?u=forward-velocity.com{% url 'blog_detail' blog.slug %}" onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" title="Share on Facebook" rel="noopener"><i class="bi bi-facebook"></i></a>
                                 <a href="https://reddit.com/submit?url=forward-velocity.com{% url 'blog_detail' blog.slug %}" onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" title="Share on Reddit" rel="noopener"><i class="bi bi-reddit"></i></a>
-                                <a href="https://bsky.app/intent/compose?text=forward-velocity.com{% url 'blog_detail' blog.slug %}" onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" title="Share on Bluesky" class="bluesky" rel="noopener"><img src="{% static 'main/assets/Bluesky_Logo.png' %}" width="16" height="16" alt=""></a>
+                                <a href="https://bsky.app/intent/compose?text=forward-velocity.com{% url 'blog_detail' blog.slug %}" onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" title="Share on Bluesky" class="bluesky" rel="noopener"><img src="{% static 'main/assets/Bluesky_Logo.png' %}" width="20" height="20" alt="Bluesky logo"></a>
                                 <a href="http://www.linkedin.com/shareArticle?mini=true&url=forward-velocity.com{% url 'blog_detail' blog.slug %}" onclick="window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" title="Share on Linkedin" rel="noopener"><i class="bi bi-linkedin"></i></a>
                             </div>
                         </div>
@@ -73,9 +114,9 @@
                         <!-- <div class="small text-gray-500 text-center">Photo Credit: Unsplash</div> -->
                         <div class="single-post-text my-3 blog-body">
                             {{blog.content|safe}}
-                            <div class="d-flex flex-row justify-content-center">
+                            <!-- <div class="d-flex flex-row justify-content-center">
                                 <img class="img-fluid mb-2 rounded " src="{% static 'main/assets/pexels-ann-h-45017-3482442.jpg' %}">
-                            </div>
+                            </div> -->
                             <hr>
                             <div class="text-center"><a href="{% url 'blog_list' %}">Back to Blog Overview</a></div>
                         </div>
