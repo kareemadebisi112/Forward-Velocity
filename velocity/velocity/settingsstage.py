@@ -25,13 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m^(-(q^--fa1+9%2$g*%av7f5)^q!t@7ym9@i#&53%!f$ffa)i'
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = ['https://staging.forward-velocity.com','https://forward-velocity.com','https://staging.forward-velocity.com/']
 
 # Application definition
 
@@ -49,11 +50,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_recaptcha',
     'django.contrib.sitemaps',
-    'ckeditor',
+    # 'ckeditor',
+
     'marketing.marketing',
     'django_crontab',
 
-    # 'admin_soft.apps.AdminSoftDashboardConfig',
 ]
 
 
@@ -99,8 +100,12 @@ WSGI_APPLICATION = 'velocity.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'velocity_staging',
+        'USER': 'staging_user',
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -143,6 +148,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'velocity/static/')
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -228,3 +235,14 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+
+CRONJOBS = [
+    ('0 * * * *', 'marketing.management.commands.check_schedules'),  # Run every hour
+]
+
+
+MAILGUN_DOMAIN = os.environ.get('MAILGUN_DOMAIN', '')
+MARKETING_EMAIL_NAME = os.environ.get('MARKETING_EMAIL_NAME', '')
+MARKETING_EMAIL_COMPANY = os.environ.get('MARKETING_EMAIL_COMPANY', '')
+MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY', '')
