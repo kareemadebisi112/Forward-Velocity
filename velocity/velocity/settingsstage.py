@@ -248,7 +248,13 @@ sentry_sdk.init(
     dsn="https://cc9d4443166dd9760d6c2cfec4c55a30@o4509245572120576.ingest.us.sentry.io/4509245577232384",
     # Add data like request headers and IP for users,
     # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
-    integrations=[DjangoIntegration()],
+    integrations=[DjangoIntegration(
+        transaction_style='url',
+        middleware_spans=True,
+        signals_spans=True,
+        cache_spans=True,
+        http_methods_to_capture=['GET', 'POST'],
+    )],
     send_default_pii=True,
 )
 
