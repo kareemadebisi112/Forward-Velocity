@@ -260,8 +260,8 @@ sentry_sdk.init(
 )
 
 MAILGUN_DOMAIN = os.environ.get('MAILGUN_DOMAIN', '')
-MARKETING_EMAIL_NAME = os.environ.get('MARKETING_EMAIL_NAME', '')
-MARKETING_EMAIL_COMPANY = os.environ.get('MARKETING_EMAIL_COMPANY', '')
+EMAIL_NAME = os.environ.get('MARKETING_EMAIL_NAME', '')
+EMAIL_COMPANY = os.environ.get('MARKETING_EMAIL_COMPANY', '')
 MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY', '')
 
 LOGGING = {
