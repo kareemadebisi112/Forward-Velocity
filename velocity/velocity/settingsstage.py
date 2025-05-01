@@ -256,6 +256,7 @@ sentry_sdk.init(
         http_methods_to_capture=['GET', 'POST'],
     )],
     send_default_pii=True,
+    traces_sample_rate=1.0,
 )
 
 MAILGUN_DOMAIN = os.environ.get('MAILGUN_DOMAIN', '')
