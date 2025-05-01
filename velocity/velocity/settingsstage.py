@@ -238,7 +238,7 @@ CKEDITOR_CONFIGS = {
 
 
 CRONJOBS = [
-    ('0 * * * *', 'marketing.management.commands.check_schedules'),  # Run every hour
+    ('0 * * * *', 'marketing.marketing.management.commands.check_schedule', '>> /webapps/staging_velocity/logs/check_schedule.log'),  # Run every hour
 ]
 
 
