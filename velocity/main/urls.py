@@ -5,6 +5,7 @@ from django.contrib.sitemaps.views import sitemap
 from .sitemaps import StaticViewSitemap
 from django.conf import settings
 from django.conf.urls.static import static
+# from marketing.marketing import urls as marketing_urls
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -15,6 +16,9 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('email/', views.email, name='email'),
     path('post_lead/', views.post_lead, name='post-lead'),
+    path('marketing/', include('marketing.marketing.urls', namespace='marketing')),
+
+    # path('marketing/', include(marketing_urls, namespace='marketing')),
 
     # Blog
     path('blog/', views.blog_list, name='blog_list'),
