@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import find_dotenv, load_dotenv
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 dotenv_path = find_dotenv()
 load_dotenv(dotenv_path)
@@ -241,6 +243,14 @@ CRONJOBS = [
     ('0 * * * *', 'marketing.marketing.management.commands.check_schedule', '>> /webapps/staging_velocity/logs/check_schedule.log'),  # Run every hour
 ]
 
+
+sentry_sdk.init(
+    dsn="https://cc9d4443166dd9760d6c2cfec4c55a30@o4509245572120576.ingest.us.sentry.io/4509245577232384",
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    integrations=[DjangoIntegration()],
+    send_default_pii=True,
+)
 
 MAILGUN_DOMAIN = os.environ.get('MAILGUN_DOMAIN', '')
 MARKETING_EMAIL_NAME = os.environ.get('MARKETING_EMAIL_NAME', '')
