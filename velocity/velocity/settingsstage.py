@@ -264,6 +264,10 @@ EMAIL_NAME = os.environ.get('MARKETING_EMAIL_NAME', '')
 EMAIL_COMPANY = os.environ.get('MARKETING_EMAIL_COMPANY', '')
 MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY', '')
 
+USE_TZ = True
+
+TIME_ZONE = 'America/New_York'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
