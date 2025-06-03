@@ -263,6 +263,7 @@ MAILGUN_DOMAIN = os.environ.get('MAILGUN_DOMAIN', '')
 EMAIL_NAME = os.environ.get('MARKETING_EMAIL_NAME', '')
 EMAIL_COMPANY = os.environ.get('MARKETING_EMAIL_COMPANY', '')
 MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY', '')
+EVENTBRITE_API_KEY = os.environ.get('EVENTBRITE_API_KEY', '')
 
 USE_TZ = True
 
